@@ -1,12 +1,11 @@
-export default function DocumentDetailPage({
+'use client';
+
+import { DocumentDetailPage } from '@/features/documents/pages/DocumentDetailPage';
+
+export default function DocumentDetailRoute({
   params,
 }: {
   params: { id: string };
 }) {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Detail Dokumen</h1>
-      <p className="text-muted-foreground">Document detail placeholder for ID: {params.id}</p>
-    </div>
-  );
+  return <DocumentDetailPage documentId={params.id} />;
 }
