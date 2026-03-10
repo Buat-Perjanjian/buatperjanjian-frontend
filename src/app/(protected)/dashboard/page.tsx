@@ -1,8 +1,7 @@
-export default function DashboardPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      <p className="text-muted-foreground">Dashboard placeholder - stats and recent documents will appear here.</p>
-    </div>
-  );
+'use client';
+
+import { DashboardPage } from '@/features/dashboard/pages/DashboardPage';
+
+export default function Page() {
+  return <DashboardPage />;
 }
