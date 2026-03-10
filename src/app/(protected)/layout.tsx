@@ -13,6 +13,7 @@ import {
   LogOut,
   Menu,
   X,
+  ShieldCheck,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -21,6 +22,10 @@ const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/documents', label: 'Dokumen', icon: FileText },
   { href: '/settings', label: 'Pengaturan', icon: Settings },
+];
+
+const adminNavItems = [
+  { href: '/admin', label: 'Admin', icon: ShieldCheck },
 ];
 
 function Sidebar({ className, onClose }: { className?: string; onClose?: () => void }) {
@@ -56,6 +61,27 @@ function Sidebar({ className, onClose }: { className?: string; onClose?: () => v
             </Link>
           );
         })}
+        {(user?.role === 'admin' || user?.role === 'superadmin') &&
+          adminNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onClose}
+                className={cn(
+                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            );
+          })}
       </nav>
       <Separator />
       <div className="p-4">
