@@ -1,12 +1,11 @@
-export default function WizardPage({
+'use client';
+
+import { WizardPage } from '@/features/wizard/pages/WizardPage';
+
+export default function WizardRoute({
   params,
 }: {
   params: { id: string };
 }) {
-  return (
-    <div className="mx-auto max-w-3xl">
-      <h1 className="text-2xl font-bold mb-4">Wizard Kontrak</h1>
-      <p className="text-muted-foreground">Contract wizard placeholder for document ID: {params.id}</p>
-    </div>
-  );
+  return <WizardPage documentId={params.id} />;
 }
