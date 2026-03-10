@@ -10,15 +10,8 @@ import { useAuth } from '@/features/auth/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Loading03Icon } from '@hugeicons/core-free-icons';
 
 const loginSchema = z.object({
   email: z.string().email('Email tidak valid'),
@@ -55,57 +48,61 @@ export function LoginPage() {
   };
 
   return (
-    <Card>
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Masuk</CardTitle>
-        <CardDescription>
+    <div className="rounded-2xl border border-slate-200/60 bg-white p-8 shadow-sm">
+      <div className="mb-6 text-center">
+        <h2 className="text-xl font-bold text-slate-900">Masuk</h2>
+        <p className="mt-1 text-sm text-slate-500">
           Masuk ke akun BuatPerjanjian.com Anda
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="nama@email.com"
-              autoComplete="email"
-              {...register('email')}
-            />
-            {errors.email && (
-              <p className="text-sm text-destructive">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Kata Sandi</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Masukkan kata sandi"
-              autoComplete="current-password"
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="text-sm text-destructive">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Masuk
-          </Button>
-        </form>
-      </CardContent>
-      <CardFooter className="justify-center">
-        <p className="text-sm text-muted-foreground">
-          Belum punya akun?{' '}
-          <Link href="/register" className="text-primary hover:underline">
-            Daftar
-          </Link>
         </p>
-      </CardFooter>
-    </Card>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-slate-700">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="nama@email.com"
+            autoComplete="email"
+            className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white"
+            {...register('email')}
+          />
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="password" className="text-slate-700">Kata Sandi</Label>
+          <Input
+            id="password"
+            type="password"
+            placeholder="Masukkan kata sandi"
+            autoComplete="current-password"
+            className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white"
+            {...register('password')}
+          />
+          {errors.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
+          )}
+        </div>
+        <Button
+          type="submit"
+          className="w-full rounded-xl bg-indigo-600 py-5 text-sm font-semibold hover:bg-indigo-700"
+          disabled={isSubmitting}
+        >
+          {isSubmitting && (
+            <HugeiconsIcon icon={Loading03Icon} size={16} className="mr-2 animate-spin" />
+          )}
+          Masuk
+        </Button>
+      </form>
+
+      <p className="mt-6 text-center text-sm text-slate-500">
+        Belum punya akun?{' '}
+        <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-700">
+          Daftar
+        </Link>
+      </p>
+    </div>
   );
 }

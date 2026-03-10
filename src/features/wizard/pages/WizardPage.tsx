@@ -8,7 +8,8 @@ import { WizardLayout } from '../components/WizardLayout';
 import { useWizardState } from '../hooks/useWizardState';
 import { useAutosaveDraft } from '../hooks/useAutosaveDraft';
 import { WizardFormData } from '../schemas/contractSchema';
-import { Loader2 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Loading03Icon } from '@hugeicons/core-free-icons';
 
 // Dynamic imports for code splitting
 const StepContractType = dynamic(
@@ -43,7 +44,7 @@ const StepPayment = dynamic(
 function StepLoader() {
   return (
     <div className="flex items-center justify-center py-12">
-      <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      <HugeiconsIcon icon={Loading03Icon} size={20} className="animate-spin" color="#64748b" />
     </div>
   );
 }
@@ -95,8 +96,8 @@ export function WizardPage({ documentId }: WizardPageProps) {
   if (isDocLoading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-        <span className="ml-3 text-muted-foreground">Memuat dokumen...</span>
+        <HugeiconsIcon icon={Loading03Icon} size={28} className="animate-spin" color="#64748b" />
+        <span className="ml-3 text-slate-500">Memuat dokumen...</span>
       </div>
     );
   }

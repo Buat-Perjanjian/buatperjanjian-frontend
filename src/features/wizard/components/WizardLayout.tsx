@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Stepper } from './Stepper';
 import { ContractPreview } from './ContractPreview';
 import { SaveStatus } from '../hooks/useAutosaveDraft';
-import { FileText, PenLine } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { File02Icon, ArrowLeft01Icon, ArrowRight01Icon, CloudSavingDone01Icon, Alert02Icon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
 
 interface WizardLayoutProps {
@@ -23,11 +24,11 @@ interface WizardLayoutProps {
   showNext?: boolean;
 }
 
-const saveStatusLabels: Record<SaveStatus, string> = {
-  idle: '',
-  saving: 'Menyimpan...',
-  saved: 'Tersimpan',
-  error: 'Gagal menyimpan',
+const saveStatusConfig: Record<SaveStatus, { label: string; className: string }> = {
+  idle: { label: '', className: '' },
+  saving: { label: 'Menyimpan...', className: 'text-slate-400' },
+  saved: { label: 'Tersimpan', className: 'text-emerald-600' },
+  error: { label: 'Gagal menyimpan', className: 'text-red-500' },
 };
 
 export function WizardLayout({
@@ -50,17 +51,12 @@ export function WizardLayout({
     <div className="flex flex-col h-full min-h-0 gap-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold truncate">{title || 'Wizard Kontrak'}</h1>
+        <h1 className="text-lg font-bold truncate text-slate-900">{title || 'Wizard Kontrak'}</h1>
         {saveStatus !== 'idle' && (
-          <span
-            className={cn(
-              'text-xs shrink-0',
-              saveStatus === 'saving' && 'text-muted-foreground',
-              saveStatus === 'saved' && 'text-green-600',
-              saveStatus === 'error' && 'text-destructive'
-            )}
-          >
-            {saveStatusLabels[saveStatus]}
+          <span className={cn('inline-flex items-center gap-1.5 text-xs shrink-0', saveStatusConfig[saveStatus].className)}>
+            {saveStatus === 'saved' && <HugeiconsIcon icon={CloudSavingDone01Icon} size={14} color="currentColor" />}
+            {saveStatus === 'error' && <HugeiconsIcon icon={Alert02Icon} size={14} color="currentColor" />}
+            {saveStatusConfig[saveStatus].label}
           </span>
         )}
       </div>
@@ -70,26 +66,32 @@ export function WizardLayout({
 
       {/* Mobile view toggle */}
       <div className="flex gap-2 md:hidden">
-        <Button
+        <button
           type="button"
-          variant={mobileView === 'form' ? 'default' : 'outline'}
-          size="sm"
-          className="flex-1"
+          className={cn(
+            'flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors',
+            mobileView === 'form'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'
+          )}
           onClick={() => setMobileView('form')}
         >
-          <PenLine className="mr-1.5 h-3.5 w-3.5" />
+          <HugeiconsIcon icon={File02Icon} size={14} color="currentColor" />
           Form
-        </Button>
-        <Button
+        </button>
+        <button
           type="button"
-          variant={mobileView === 'preview' ? 'default' : 'outline'}
-          size="sm"
-          className="flex-1"
+          className={cn(
+            'flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors',
+            mobileView === 'preview'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'
+          )}
           onClick={() => setMobileView('preview')}
         >
-          <FileText className="mr-1.5 h-3.5 w-3.5" />
+          <HugeiconsIcon icon={File02Icon} size={14} color="currentColor" />
           Pratinjau
-        </Button>
+        </button>
       </div>
 
       {/* Two-panel layout */}
@@ -101,7 +103,9 @@ export function WizardLayout({
             mobileView === 'preview' ? 'hidden md:block' : 'block'
           )}
         >
-          {children}
+          <div className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm">
+            {children}
+          </div>
         </div>
 
         {/* Preview panel */}
@@ -116,18 +120,25 @@ export function WizardLayout({
       </div>
 
       {/* Footer navigation */}
-      <div className="flex items-center justify-between border-t pt-4">
+      <div className="flex items-center justify-between border-t border-slate-200/60 pt-4">
         <Button
           type="button"
           variant="outline"
           onClick={onPrev}
           disabled={isFirstStep}
+          className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
         >
+          <HugeiconsIcon icon={ArrowLeft01Icon} size={16} color="currentColor" className="mr-1.5" />
           Sebelumnya
         </Button>
         {showNext && (
-          <Button type="button" onClick={onNext}>
+          <Button
+            type="button"
+            onClick={onNext}
+            className="rounded-xl bg-indigo-600 text-white hover:bg-indigo-700"
+          >
             {nextLabel || (isLastStep ? 'Selesai' : 'Selanjutnya')}
+            <HugeiconsIcon icon={ArrowRight01Icon} size={16} color="currentColor" className="ml-1.5" />
           </Button>
         )}
       </div>

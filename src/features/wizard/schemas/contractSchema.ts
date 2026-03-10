@@ -10,6 +10,7 @@ export const contractTypeSchema = z.object({
 
 export const companyInfoSchema = z.object({
   company_id: z.string().optional(),
+  nomor_kontrak: z.string().optional(),
   nama_perusahaan: z.string().min(1, 'Nama perusahaan wajib diisi'),
   alamat_perusahaan: z.string().min(1, 'Alamat perusahaan wajib diisi'),
   telepon_perusahaan: z.string().optional(),
@@ -27,11 +28,15 @@ export const employeeInfoSchema = z.object({
 
 export const jobDetailsSchema = z.object({
   jabatan: z.string().min(1, 'Jabatan wajib diisi'),
+  departemen: z.string().optional(),
   deskripsi_pekerjaan: z.string().min(1, 'Deskripsi pekerjaan wajib diisi'),
   gaji: z.string().min(1, 'Gaji wajib diisi'),
   tunjangan: z.string().optional(),
+  tanggal_gajian: z.string().optional(),
   masa_kontrak: z.string().optional(),
   tanggal_mulai: z.string().min(1, 'Tanggal mulai wajib diisi'),
+  tanggal_selesai: z.string().optional(),
+  jam_kerja: z.string().optional(),
   lokasi_kerja: z.string().min(1, 'Lokasi kerja wajib diisi'),
 });
 
@@ -66,12 +71,13 @@ export const WIZARD_STEPS = [
   { title: 'Detail Pekerjaan', description: 'Informasi pekerjaan' },
   { title: 'Klausul', description: 'Pilih klausul tambahan' },
   { title: 'Pratinjau', description: 'Tinjau kontrak' },
-  { title: 'Pembayaran', description: 'Selesaikan pembayaran' },
+  { title: 'Unduh', description: 'Unduh kontrak gratis' },
 ] as const;
 
 export const defaultWizardValues: WizardFormData = {
   contract_type: 'PKWT',
   company_id: '',
+  nomor_kontrak: '',
   nama_perusahaan: '',
   alamat_perusahaan: '',
   telepon_perusahaan: '',
@@ -83,11 +89,15 @@ export const defaultWizardValues: WizardFormData = {
   tempat_lahir: '',
   tanggal_lahir: '',
   jabatan: '',
+  departemen: '',
   deskripsi_pekerjaan: '',
   gaji: '',
   tunjangan: '',
+  tanggal_gajian: '',
   masa_kontrak: '',
   tanggal_mulai: '',
+  tanggal_selesai: '',
+  jam_kerja: '',
   lokasi_kerja: '',
   selected_clauses: [],
 };

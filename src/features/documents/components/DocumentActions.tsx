@@ -3,7 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
+import { HugeiconsIcon } from '@hugeicons/react';
+import {
+  Download04Icon,
+  PencilEdit02Icon,
+  Delete02Icon,
+  Loading03Icon,
+  AlertCircleIcon,
+} from '@hugeicons/core-free-icons';
 import {
   Dialog,
   DialogContent,
@@ -13,7 +20,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { documentsApi } from '@/services/api/documents';
-import { Download, Pencil, Trash2, Loader2 } from 'lucide-react';
 
 interface DocumentActionsProps {
   documentId: string;
@@ -24,6 +30,7 @@ export function DocumentActions({ documentId }: DocumentActionsProps) {
   const queryClient = useQueryClient();
   const [showDelete, setShowDelete] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
 
   const deleteMutation = useMutation({
     mutationFn: () => documentsApi.delete(documentId),
@@ -35,19 +42,20 @@ export function DocumentActions({ documentId }: DocumentActionsProps) {
 
   const handleDownload = async () => {
     setIsDownloading(true);
+    setDownloadError(null);
     try {
       const res = await documentsApi.download(documentId);
-      const blob = new Blob([res.data as BlobPart], { type: 'application/pdf' });
+      const blob = new Blob([res.data as BlobPart], { type: 'text/html' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `kontrak-${documentId}.pdf`;
+      a.download = `kontrak-${documentId}.html`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      // silently fail - could add toast here
+      setDownloadError('Gagal mengunduh dokumen. Pastikan dokumen sudah di-generate.');
     } finally {
       setIsDownloading(false);
     }
@@ -55,53 +63,80 @@ export function DocumentActions({ documentId }: DocumentActionsProps) {
 
   return (
     <>
+      {/* Error Banner */}
+      {downloadError && (
+        <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+          <HugeiconsIcon icon={AlertCircleIcon} size={18} color="#dc2626" />
+          <p className="text-sm text-red-700">{downloadError}</p>
+        </div>
+      )}
+
+      {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
-        <Button onClick={handleDownload} disabled={isDownloading} className="gap-2">
+        <button
+          onClick={handleDownload}
+          disabled={isDownloading}
+          className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+        >
           {isDownloading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <HugeiconsIcon
+              icon={Loading03Icon}
+              size={18}
+              color="currentColor"
+              className="animate-spin"
+            />
           ) : (
-            <Download className="h-4 w-4" />
+            <HugeiconsIcon icon={Download04Icon} size={18} color="currentColor" />
           )}
           Download PDF
-        </Button>
-        <Button
-          variant="outline"
+        </button>
+        <button
           onClick={() => router.push(`/wizard/${documentId}`)}
-          className="gap-2"
+          className="inline-flex items-center gap-2 rounded-xl border border-slate-200/60 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
         >
-          <Pencil className="h-4 w-4" />
+          <HugeiconsIcon icon={PencilEdit02Icon} size={18} color="currentColor" />
           Edit
-        </Button>
-        <Button
-          variant="outline"
-          className="gap-2 text-destructive hover:text-destructive"
+        </button>
+        <button
           onClick={() => setShowDelete(true)}
+          className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-white px-4 py-2.5 text-sm font-medium text-red-600 shadow-sm transition-colors hover:bg-red-50"
         >
-          <Trash2 className="h-4 w-4" />
+          <HugeiconsIcon icon={Delete02Icon} size={18} color="currentColor" />
           Hapus
-        </Button>
+        </button>
       </div>
 
+      {/* Delete Confirmation Dialog */}
       <Dialog open={showDelete} onOpenChange={setShowDelete}>
-        <DialogContent>
+        <DialogContent className="rounded-2xl">
           <DialogHeader>
-            <DialogTitle>Hapus Dokumen</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-slate-900">Hapus Dokumen</DialogTitle>
+            <DialogDescription className="text-slate-500">
               Apakah Anda yakin ingin menghapus dokumen ini? Tindakan ini tidak dapat dibatalkan.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDelete(false)}>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <button
+              onClick={() => setShowDelete(false)}
+              className="inline-flex items-center justify-center rounded-xl border border-slate-200/60 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+            >
               Batal
-            </Button>
-            <Button
-              variant="destructive"
+            </button>
+            <button
               disabled={deleteMutation.isPending}
               onClick={() => deleteMutation.mutate()}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-700 disabled:opacity-50"
             >
-              {deleteMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {deleteMutation.isPending && (
+                <HugeiconsIcon
+                  icon={Loading03Icon}
+                  size={16}
+                  color="currentColor"
+                  className="animate-spin"
+                />
+              )}
               Hapus
-            </Button>
+            </button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -67,3 +67,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Contract preview: restore table styling inside prose */
+@layer components {
+  .prose table {
+    width: auto;
+    border-collapse: collapse;
+  }
+  .prose table td {
+    padding: 0.25rem 0.5rem;
+    vertical-align: top;
+  }
+}

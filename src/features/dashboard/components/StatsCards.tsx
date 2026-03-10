@@ -1,7 +1,12 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, FilePen, CheckCircle, Building2 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import {
+  File02Icon,
+  PencilEdit02Icon,
+  CheckmarkCircle02Icon,
+  Building06Icon,
+} from '@hugeicons/core-free-icons';
 import type { Document, Company } from '@/types';
 
 interface StatsCardsProps {
@@ -21,53 +26,53 @@ export function StatsCards({ documents, companies }: StatsCardsProps) {
     {
       label: 'Total Dokumen',
       value: totalDocuments,
-      icon: FileText,
-      color: 'text-blue-600',
-      bg: 'bg-blue-50',
+      icon: File02Icon,
+      iconColor: '#4f46e5',
+      bgColor: 'bg-indigo-50',
     },
     {
       label: 'Draft',
       value: draftCount,
-      icon: FilePen,
-      color: 'text-amber-600',
-      bg: 'bg-amber-50',
+      icon: PencilEdit02Icon,
+      iconColor: '#d97706',
+      bgColor: 'bg-amber-50',
     },
     {
       label: 'Selesai',
       value: completedCount,
-      icon: CheckCircle,
-      color: 'text-emerald-600',
-      bg: 'bg-emerald-50',
+      icon: CheckmarkCircle02Icon,
+      iconColor: '#059669',
+      bgColor: 'bg-emerald-50',
     },
     {
       label: 'Perusahaan',
       value: companyCount,
-      icon: Building2,
-      color: 'text-violet-600',
-      bg: 'bg-violet-50',
+      icon: Building06Icon,
+      iconColor: '#7c3aed',
+      bgColor: 'bg-violet-50',
     },
   ];
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map((stat) => {
-        const Icon = stat.icon;
-        return (
-          <Card key={stat.label}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                {stat.label}
-              </CardTitle>
-              <div className={`rounded-md p-2 ${stat.bg}`}>
-                <Icon className={`h-4 w-4 ${stat.color}`} />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">{stat.value}</p>
-            </CardContent>
-          </Card>
-        );
-      })}
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {stats.map((stat) => (
+        <div
+          key={stat.label}
+          className="rounded-2xl border border-slate-200/60 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-slate-500">{stat.label}</p>
+            <div className={`rounded-xl p-2.5 ${stat.bgColor}`}>
+              <HugeiconsIcon
+                icon={stat.icon}
+                size={20}
+                color={stat.iconColor}
+              />
+            </div>
+          </div>
+          <p className="mt-3 text-3xl font-bold text-slate-900">{stat.value}</p>
+        </div>
+      ))}
     </div>
   );
 }

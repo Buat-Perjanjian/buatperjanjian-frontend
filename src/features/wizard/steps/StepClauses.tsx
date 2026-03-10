@@ -2,13 +2,12 @@
 
 import { UseFormReturn } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { clausesApi } from '@/services/api/clauses';
 import { WizardFormData } from '../schemas/contractSchema';
 import { cn } from '@/lib/utils';
-import { Check, Plus, X, Loader2 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { CheckmarkCircle02Icon, Add01Icon, Cancel01Icon, Loading03Icon } from '@hugeicons/core-free-icons';
 
 interface StepClausesProps {
   form: UseFormReturn<WizardFormData>;
@@ -38,40 +37,42 @@ export function StepClauses({ form }: StepClausesProps) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-        <span className="ml-2 text-sm text-muted-foreground">Memuat klausul...</span>
+        <HugeiconsIcon icon={Loading03Icon} size={20} className="animate-spin" color="#64748b" />
+        <span className="ml-2 text-sm text-slate-500">Memuat klausul...</span>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-lg font-semibold">Pilih Klausul</h2>
-        <p className="text-sm text-muted-foreground">
+        <h2 className="text-lg font-semibold text-slate-900">Pilih Klausul</h2>
+        <p className="mt-1 text-sm text-slate-500">
           Tambahkan klausul tambahan ke kontrak Anda.
         </p>
       </div>
 
       {selectedClauses.length > 0 && (
         <div className="space-y-2">
-          <p className="text-sm font-medium">Klausul terpilih ({selectedClauses.length})</p>
+          <p className="text-sm font-medium text-slate-700">Klausul terpilih ({selectedClauses.length})</p>
           <div className="flex flex-wrap gap-2">
             {selectedClauses.map((id) => {
               const clause = clauses.find((c) => c.id === id);
               return (
-                <Badge key={id} variant="secondary" className="gap-1 pr-1">
+                <Badge
+                  key={id}
+                  variant="secondary"
+                  className="gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 pr-1.5 text-indigo-700"
+                >
                   {clause?.title || id}
-                  <Button
+                  <button
                     type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="h-4 w-4 p-0 hover:bg-transparent"
+                    className="ml-0.5 rounded-md p-0.5 transition-colors hover:bg-indigo-100"
                     onClick={() => toggleClause(id)}
                   >
-                    <X className="h-3 w-3" />
+                    <HugeiconsIcon icon={Cancel01Icon} size={12} color="#4f46e5" />
                     <span className="sr-only">Hapus klausul</span>
-                  </Button>
+                  </button>
                 </Badge>
               );
             })}
@@ -80,7 +81,7 @@ export function StepClauses({ form }: StepClausesProps) {
       )}
 
       {clauses.length === 0 ? (
-        <p className="py-8 text-center text-sm text-muted-foreground">
+        <p className="py-8 text-center text-sm text-slate-400">
           Belum ada klausul tersedia untuk tipe kontrak ini.
         </p>
       ) : (
@@ -88,11 +89,13 @@ export function StepClauses({ form }: StepClausesProps) {
           {clauses.map((clause) => {
             const selected = isSelected(clause.id);
             return (
-              <Card
+              <div
                 key={clause.id}
                 className={cn(
-                  'cursor-pointer transition-colors hover:border-primary/50',
-                  selected && 'border-primary bg-primary/5'
+                  'cursor-pointer rounded-2xl border bg-white p-4 transition-all hover:border-indigo-300 hover:shadow-sm',
+                  selected
+                    ? 'border-indigo-500 bg-indigo-50/50 shadow-sm'
+                    : 'border-slate-200/60'
                 )}
                 onClick={() => toggleClause(clause.id)}
                 role="checkbox"
@@ -105,25 +108,29 @@ export function StepClauses({ form }: StepClausesProps) {
                   }
                 }}
               >
-                <CardContent className="flex items-start gap-3 p-4">
+                <div className="flex items-start gap-3">
                   <div
                     className={cn(
-                      'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors',
+                      'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md transition-colors',
                       selected
-                        ? 'border-primary bg-primary text-primary-foreground'
-                        : 'border-muted-foreground/30'
+                        ? 'bg-indigo-600'
+                        : 'border border-slate-300 bg-white'
                     )}
                   >
-                    {selected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3 text-muted-foreground/50" />}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="font-medium text-sm">{clause.title}</p>
-                    {clause.description && (
-                      <p className="text-xs text-muted-foreground mt-0.5">{clause.description}</p>
+                    {selected ? (
+                      <HugeiconsIcon icon={CheckmarkCircle02Icon} size={12} color="#ffffff" />
+                    ) : (
+                      <HugeiconsIcon icon={Add01Icon} size={10} color="#cbd5e1" />
                     )}
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-slate-900">{clause.title}</p>
+                    {clause.description && (
+                      <p className="mt-0.5 text-xs text-slate-500">{clause.description}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>

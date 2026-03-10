@@ -3,21 +3,19 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Add01Icon, Loading03Icon, FilterIcon } from '@hugeicons/core-free-icons';
 import { documentsApi } from '@/services/api/documents';
 import { DocumentTable } from '../components/DocumentTable';
-import { Plus, Loader2 } from 'lucide-react';
-import { Card } from '@/components/ui/card';
 
 const CONTRACT_TYPES = ['PKWT', 'PKWTT', 'Freelance', 'NDA'] as const;
+
+const STATUS_TABS = [
+  { value: 'all', label: 'Semua' },
+  { value: 'draft', label: 'Draft' },
+  { value: 'generated', label: 'Generated' },
+  { value: 'paid', label: 'Lunas' },
+] as const;
 
 export function DocumentsListPage() {
   const router = useRouter();
@@ -36,51 +34,83 @@ export function DocumentsListPage() {
   const documents = res?.data ?? [];
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Dokumen Saya</h1>
-          <p className="text-muted-foreground">Kelola semua dokumen kontrak Anda.</p>
+    <div className="min-h-screen bg-[#f8fafc]">
+      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+              Dokumen Saya
+            </h1>
+            <p className="mt-1 text-sm text-slate-500">
+              Kelola semua dokumen kontrak Anda.
+            </p>
+          </div>
+          <button
+            onClick={() => router.push('/templates')}
+            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            <HugeiconsIcon icon={Add01Icon} size={18} color="currentColor" />
+            Buat Kontrak Baru
+          </button>
         </div>
-        <Button onClick={() => router.push('/templates')} className="gap-2">
-          <Plus className="h-4 w-4" />
-          Buat Kontrak Baru
-        </Button>
-      </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Tabs value={statusFilter} onValueChange={setStatusFilter}>
-          <TabsList>
-            <TabsTrigger value="all">Semua</TabsTrigger>
-            <TabsTrigger value="draft">Draft</TabsTrigger>
-            <TabsTrigger value="generated">Generated</TabsTrigger>
-            <TabsTrigger value="paid">Lunas</TabsTrigger>
-          </TabsList>
-        </Tabs>
-
-        <Select value={typeFilter} onValueChange={setTypeFilter}>
-          <SelectTrigger className="w-[160px]">
-            <SelectValue placeholder="Tipe Kontrak" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Semua Tipe</SelectItem>
-            {CONTRACT_TYPES.map((type) => (
-              <SelectItem key={type} value={type}>
-                {type}
-              </SelectItem>
+        {/* Filters */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          {/* Status Tabs */}
+          <div className="inline-flex items-center rounded-xl border border-slate-200/60 bg-white p-1 shadow-sm">
+            {STATUS_TABS.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => setStatusFilter(tab.value)}
+                className={`rounded-lg px-3.5 py-1.5 text-sm font-medium transition-colors ${
+                  statusFilter === tab.value
+                    ? 'bg-indigo-600 text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900'
+                }`}
+              >
+                {tab.label}
+              </button>
             ))}
-          </SelectContent>
-        </Select>
-      </div>
+          </div>
 
-      {isLoading ? (
-        <Card className="flex items-center justify-center p-12">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-          <span className="ml-2 text-sm text-muted-foreground">Memuat dokumen...</span>
-        </Card>
-      ) : (
-        <DocumentTable documents={documents} />
-      )}
+          {/* Type Filter Select */}
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <HugeiconsIcon icon={FilterIcon} size={16} color="#94a3b8" />
+            </div>
+            <select
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+              className="appearance-none rounded-xl border border-slate-200/60 bg-white py-2 pl-9 pr-8 text-sm text-slate-900 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+            >
+              <option value="all">Semua Tipe</option>
+              {CONTRACT_TYPES.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Content */}
+        {isLoading ? (
+          <div className="flex items-center justify-center rounded-2xl border border-slate-200/60 bg-white p-12 shadow-sm">
+            <HugeiconsIcon
+              icon={Loading03Icon}
+              size={24}
+              color="#94a3b8"
+              className="animate-spin"
+            />
+            <span className="ml-2 text-sm text-slate-500">
+              Memuat dokumen...
+            </span>
+          </div>
+        ) : (
+          <DocumentTable documents={documents} />
+        )}
+      </div>
     </div>
   );
 }
