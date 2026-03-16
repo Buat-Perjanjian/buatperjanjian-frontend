@@ -15,7 +15,7 @@ const benefits = [
 
 export default function Pricing() {
   return (
-    <section id="harga" className="py-24 px-4">
+    <section id="harga" className="py-28 px-6">
       <div className="mx-auto max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -40,7 +40,7 @@ export default function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative mt-12 rounded-2xl border border-indigo-200 bg-white p-8 shadow-lg shadow-indigo-100/50 sm:p-10"
+          className="relative mt-12 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10"
         >
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-1 text-xs font-semibold text-white">
             MASA PROMOSI

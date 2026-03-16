@@ -8,10 +8,20 @@ import {
   Building06Icon,
 } from '@hugeicons/core-free-icons';
 import type { Document, Company } from '@/types';
+import type { IconSvgElement } from '@hugeicons/react';
 
 interface StatsCardsProps {
   documents: Document[];
   companies: Company[];
+}
+
+interface StatItem {
+  label: string;
+  value: number;
+  icon: IconSvgElement;
+  iconColor: string;
+  bgLight: string;
+  bgDark: string;
 }
 
 export function StatsCards({ documents, companies }: StatsCardsProps) {
@@ -22,57 +32,57 @@ export function StatsCards({ documents, companies }: StatsCardsProps) {
   ).length;
   const companyCount = companies.length;
 
-  const stats = [
+  const stats: StatItem[] = [
     {
       label: 'Total Dokumen',
       value: totalDocuments,
       icon: File02Icon,
       iconColor: '#4f46e5',
-      bgColor: 'bg-indigo-50',
+      bgLight: 'bg-indigo-50',
+      bgDark: 'dark:bg-indigo-950/50',
     },
     {
       label: 'Draft',
       value: draftCount,
       icon: PencilEdit02Icon,
       iconColor: '#d97706',
-      bgColor: 'bg-amber-50',
+      bgLight: 'bg-amber-50',
+      bgDark: 'dark:bg-amber-950/50',
     },
     {
       label: 'Selesai',
       value: completedCount,
       icon: CheckmarkCircle02Icon,
       iconColor: '#059669',
-      bgColor: 'bg-emerald-50',
+      bgLight: 'bg-emerald-50',
+      bgDark: 'dark:bg-emerald-950/50',
     },
     {
       label: 'Perusahaan',
       value: companyCount,
       icon: Building06Icon,
       iconColor: '#7c3aed',
-      bgColor: 'bg-violet-50',
+      bgLight: 'bg-violet-50',
+      bgDark: 'dark:bg-violet-950/50',
     },
   ];
 
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <>
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="rounded-2xl border border-slate-200/60 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+          className="group rounded-2xl border border-slate-100 bg-white p-5 transition-all hover:border-slate-200 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
         >
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-slate-500">{stat.label}</p>
-            <div className={`rounded-xl p-2.5 ${stat.bgColor}`}>
-              <HugeiconsIcon
-                icon={stat.icon}
-                size={20}
-                color={stat.iconColor}
-              />
+            <p className="text-xs font-medium text-slate-500 dark:text-zinc-400">{stat.label}</p>
+            <div className={`rounded-xl p-2 ${stat.bgLight} ${stat.bgDark}`}>
+              <HugeiconsIcon icon={stat.icon} size={18} color={stat.iconColor} />
             </div>
           </div>
-          <p className="mt-3 text-3xl font-bold text-slate-900">{stat.value}</p>
+          <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-zinc-100">{stat.value}</p>
         </div>
       ))}
-    </div>
+    </>
   );
 }

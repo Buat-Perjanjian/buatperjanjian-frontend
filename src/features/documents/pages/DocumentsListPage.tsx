@@ -34,21 +34,21 @@ export function DocumentsListPage() {
   const documents = res?.data ?? [];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
-      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+    <div>
+      <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
               Dokumen Saya
             </h1>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-400">
               Kelola semua dokumen kontrak Anda.
             </p>
           </div>
           <button
             onClick={() => router.push('/templates')}
-            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
           >
             <HugeiconsIcon icon={Add01Icon} size={18} color="currentColor" />
             Buat Kontrak Baru
@@ -58,15 +58,15 @@ export function DocumentsListPage() {
         {/* Filters */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           {/* Status Tabs */}
-          <div className="inline-flex items-center rounded-xl border border-slate-200/60 bg-white p-1 shadow-sm">
+          <div className="inline-flex items-center rounded-xl border border-slate-100 bg-white p-1">
             {STATUS_TABS.map((tab) => (
               <button
                 key={tab.value}
                 onClick={() => setStatusFilter(tab.value)}
                 className={`rounded-lg px-3.5 py-1.5 text-sm font-medium transition-colors ${
                   statusFilter === tab.value
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-900'
+                    ? 'bg-slate-900 text-white'
+                    : 'text-slate-400 hover:text-slate-900'
                 }`}
               >
                 {tab.label}
@@ -82,7 +82,7 @@ export function DocumentsListPage() {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="appearance-none rounded-xl border border-slate-200/60 bg-white py-2 pl-9 pr-8 text-sm text-slate-900 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              className="appearance-none rounded-xl border border-slate-100 bg-white py-2 pl-9 pr-8 text-sm text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
             >
               <option value="all">Semua Tipe</option>
               {CONTRACT_TYPES.map((type) => (
@@ -96,7 +96,7 @@ export function DocumentsListPage() {
 
         {/* Content */}
         {isLoading ? (
-          <div className="flex items-center justify-center rounded-2xl border border-slate-200/60 bg-white p-12 shadow-sm">
+          <div className="flex items-center justify-center rounded-2xl border border-slate-100 bg-white p-12">
             <HugeiconsIcon
               icon={Loading03Icon}
               size={24}

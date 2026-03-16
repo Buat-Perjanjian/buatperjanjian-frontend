@@ -69,7 +69,7 @@ const item = {
 
 export default function Features() {
   return (
-    <section id="fitur" className="py-24 px-4">
+    <section id="fitur" className="py-28 px-6">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -100,7 +100,7 @@ export default function Features() {
             <motion.div
               key={f.title}
               variants={item}
-              className="group rounded-2xl border border-slate-100 bg-white p-6 transition-all hover:border-slate-200 hover:shadow-lg hover:shadow-slate-100"
+              className="group rounded-2xl border border-slate-100 bg-white p-7 transition-all hover:border-slate-200 hover:shadow-md"
             >
               <div
                 className="flex h-12 w-12 items-center justify-center rounded-xl"

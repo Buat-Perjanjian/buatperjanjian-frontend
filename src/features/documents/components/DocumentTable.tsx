@@ -138,8 +138,8 @@ export function DocumentTable({ documents }: DocumentTableProps) {
 
   if (documents.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200/60 bg-white p-12 shadow-sm">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white p-12">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50">
           <HugeiconsIcon icon={File02Icon} size={24} color="#94a3b8" />
         </div>
         <p className="mt-4 text-sm font-medium text-slate-900">Belum ada dokumen.</p>
@@ -152,10 +152,10 @@ export function DocumentTable({ documents }: DocumentTableProps) {
 
   return (
     <>
-      <div className="overflow-hidden rounded-2xl border border-slate-200/60 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-slate-200/60 bg-slate-50/50">
+            <tr className="border-b border-slate-100 bg-slate-50/50">
               <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Judul
               </th>
@@ -188,7 +188,7 @@ export function DocumentTable({ documents }: DocumentTableProps) {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-200/60">
+          <tbody className="divide-y divide-slate-100">
             {sorted.map((doc) => {
               const status = statusConfig[doc.status];
               const typeColor = doc.contract_type

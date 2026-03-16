@@ -7,7 +7,7 @@ import { ArrowRight01Icon } from '@hugeicons/core-free-icons';
 
 export default function CtaSection() {
   return (
-    <section className="px-4 py-24">
+    <section className="px-6 py-28">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

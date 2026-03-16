@@ -17,4 +17,5 @@ export const documentsApi = {
   addClause: (id: string, clauseId: string) =>
     api.post('/documents/' + id + '/clauses', { clause_id: clauseId }),
   download: (id: string) => api.get('/documents/' + id + '/download', { responseType: 'blob' }),
+  downloadPdf: (id: string) => api.get('/documents/' + id + '/download-pdf', { responseType: 'blob' }),
 };

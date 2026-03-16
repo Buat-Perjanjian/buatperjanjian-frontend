@@ -31,16 +31,16 @@ export default function ChatHero() {
   };
 
   return (
-    <section className="relative flex min-h-[85vh] flex-col items-center justify-center px-4 py-20">
+    <section className="relative flex min-h-[80vh] flex-col items-center justify-center px-6 py-24">
       {/* Badge */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="mb-6 flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50/80 px-4 py-1.5"
+        className="mb-8 flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 shadow-sm"
       >
         <HugeiconsIcon icon={SparklesIcon} size={14} color="#4f46e5" />
-        <span className="text-xs font-medium text-indigo-700">
+        <span className="text-xs font-medium text-slate-600">
           AI-Powered Contract Platform
         </span>
       </motion.div>
@@ -50,10 +50,10 @@ export default function ChatHero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="max-w-3xl text-center text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
+        className="max-w-3xl text-center text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
       >
         Buat Kontrak Kerja{' '}
-        <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+        <span className="text-indigo-600">
           Legal & Profesional
         </span>
       </motion.h1>
@@ -63,7 +63,7 @@ export default function ChatHero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="mt-5 max-w-xl text-center text-base text-slate-500 sm:text-lg"
+        className="mt-6 max-w-lg text-center text-base leading-relaxed text-slate-400 sm:text-lg"
       >
         Platform AI yang membantu Anda membuat kontrak kerja sesuai hukum Indonesia. Cepat, mudah, dan gratis.
       </motion.p>
@@ -73,38 +73,37 @@ export default function ChatHero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="mt-10 w-full max-w-2xl"
+        className="mt-12 w-full max-w-xl"
       >
         <form onSubmit={handleSubmit} className="relative">
-          <div className="flex items-center rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-200/50 transition-shadow focus-within:border-indigo-300 focus-within:shadow-xl focus-within:shadow-indigo-100/50">
-            <HugeiconsIcon icon={AiChat02Icon} size={22} color="#94a3b8" className="mr-3 shrink-0" />
+          <div className="flex items-center rounded-2xl border border-slate-200 bg-white px-5 py-3.5 shadow-sm transition-all focus-within:border-indigo-300 focus-within:shadow-md">
+            <HugeiconsIcon icon={AiChat02Icon} size={20} color="#cbd5e1" className="mr-3 shrink-0" />
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Mau buat kontrak apa hari ini?"
-              className="flex-1 bg-transparent text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none sm:text-base"
+              className="flex-1 bg-transparent text-sm text-slate-900 placeholder:text-slate-300 focus:outline-none"
             />
             <button
               type="submit"
-              className="ml-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm transition-all hover:bg-indigo-700 hover:shadow-md"
+              className="ml-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white transition-all hover:bg-indigo-700"
             >
-              <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
+              <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
             </button>
           </div>
         </form>
 
         {/* Quick Action Chips */}
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-          <span className="text-xs text-slate-400">Coba langsung:</span>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+          <span className="text-xs text-slate-300">Coba langsung:</span>
           {CONTRACT_TYPES.map((type) => (
             <button
               key={type.label}
               onClick={() => handleChipClick(type.label)}
-              className="rounded-lg border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-600 transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
+              className="rounded-full border border-slate-150 bg-white px-3.5 py-1.5 text-xs font-medium text-slate-500 transition-all hover:border-indigo-200 hover:text-indigo-600"
             >
               {type.label}
-              <span className="ml-1 text-slate-400">{type.desc}</span>
             </button>
           ))}
         </div>
@@ -115,18 +114,18 @@ export default function ChatHero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.6 }}
-        className="mt-12 flex items-center gap-8 text-center sm:gap-12"
+        className="mt-16 flex items-center gap-10 text-center sm:gap-14"
       >
         <div>
           <div className="text-2xl font-bold text-slate-900">500+</div>
           <div className="text-xs text-slate-400">Kontrak Dibuat</div>
         </div>
-        <div className="h-8 w-px bg-slate-200" />
+        <div className="h-8 w-px bg-slate-100" />
         <div>
           <div className="text-2xl font-bold text-slate-900">4</div>
           <div className="text-xs text-slate-400">Template Legal</div>
         </div>
-        <div className="h-8 w-px bg-slate-200" />
+        <div className="h-8 w-px bg-slate-100" />
         <div>
           <div className="text-2xl font-bold text-slate-900">5 min</div>
           <div className="text-xs text-slate-400">Rata-rata Proses</div>

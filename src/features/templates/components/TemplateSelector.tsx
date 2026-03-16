@@ -48,7 +48,7 @@ export function TemplateSelector() {
       documentsApi.create(data),
     onSuccess: (res) => {
       const newDoc = res.data;
-      router.push(`/wizard/${newDoc.id}`);
+      router.push(`/builder/${newDoc.id}`);
     },
   });
 

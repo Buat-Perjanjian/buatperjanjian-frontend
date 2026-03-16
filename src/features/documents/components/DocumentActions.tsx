@@ -44,18 +44,18 @@ export function DocumentActions({ documentId }: DocumentActionsProps) {
     setIsDownloading(true);
     setDownloadError(null);
     try {
-      const res = await documentsApi.download(documentId);
-      const blob = new Blob([res.data as BlobPart], { type: 'text/html' });
+      const res = await documentsApi.downloadPdf(documentId);
+      const blob = new Blob([res.data as BlobPart], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `kontrak-${documentId}.html`;
+      a.download = `kontrak-${documentId}.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      setDownloadError('Gagal mengunduh dokumen. Pastikan dokumen sudah di-generate.');
+      setDownloadError('Gagal mengunduh PDF. Pastikan dokumen sudah di-generate.');
     } finally {
       setIsDownloading(false);
     }

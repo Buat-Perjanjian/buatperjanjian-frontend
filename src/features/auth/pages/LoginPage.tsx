@@ -48,23 +48,23 @@ export function LoginPage() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200/60 bg-white p-8 shadow-sm">
-      <div className="mb-6 text-center">
-        <h2 className="text-xl font-bold text-slate-900">Masuk</h2>
-        <p className="mt-1 text-sm text-slate-500">
+    <div>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-slate-900">Masuk</h2>
+        <p className="mt-2 text-sm text-slate-400">
           Masuk ke akun BuatPerjanjian.com Anda
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-slate-700">Email</Label>
+          <Label htmlFor="email" className="text-sm text-slate-600">Email</Label>
           <Input
             id="email"
             type="email"
             placeholder="nama@email.com"
             autoComplete="email"
-            className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white"
+            className="h-11 rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white"
             {...register('email')}
           />
           {errors.email && (
@@ -72,13 +72,13 @@ export function LoginPage() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password" className="text-slate-700">Kata Sandi</Label>
+          <Label htmlFor="password" className="text-sm text-slate-600">Kata Sandi</Label>
           <Input
             id="password"
             type="password"
             placeholder="Masukkan kata sandi"
             autoComplete="current-password"
-            className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white"
+            className="h-11 rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white"
             {...register('password')}
           />
           {errors.password && (
@@ -97,7 +97,7 @@ export function LoginPage() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-slate-500">
+      <p className="mt-8 text-center text-sm text-slate-400">
         Belum punya akun?{' '}
         <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-700">
           Daftar

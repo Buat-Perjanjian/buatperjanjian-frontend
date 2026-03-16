@@ -39,7 +39,7 @@ const steps: Step[] = [
 
 export default function HowItWorks() {
   return (
-    <section id="cara-kerja" className="bg-slate-50/50 py-24 px-4">
+    <section id="cara-kerja" className="bg-slate-50/30 py-28 px-6">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
