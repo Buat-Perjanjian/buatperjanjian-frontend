@@ -3,20 +3,21 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { CheckmarkCircle02Icon } from '@hugeicons/core-free-icons';
+import { CheckmarkCircle02Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons';
 
 const benefits = [
-  'Semua 4 template kontrak',
-  'AI-generated kontrak',
-  'Sesuai UU Ketenagakerjaan',
-  'Download unlimited',
-  'Wizard interaktif',
+  'Semua 4 template kontrak (PKWT, PKWTT, Freelance, NDA)',
+  'AI Chat Assistant untuk generate kontrak',
+  'Editor dokumen langsung di browser',
+  'Download PDF tanpa batas',
+  'Sesuai UU Ketenagakerjaan Indonesia',
+  'Wizard interaktif langkah demi langkah',
 ];
 
 export default function Pricing() {
   return (
-    <section id="harga" className="py-28 px-6">
-      <div className="mx-auto max-w-2xl">
+    <section id="harga" className="py-32 px-6">
+      <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -24,14 +25,14 @@ export default function Pricing() {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <span className="text-sm font-semibold uppercase tracking-wider text-indigo-600">
+          <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600">
             Harga
           </span>
-          <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl">
-            Gratis Selama Masa Promosi
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Gratis. Tanpa syarat.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-slate-500">
-            Nikmati semua fitur premium tanpa biaya. Tanpa kartu kredit.
+          <p className="mx-auto mt-4 max-w-xl text-base text-slate-500">
+            Selama masa promosi, semua fitur premium bisa digunakan tanpa biaya. Tanpa kartu kredit.
           </p>
         </motion.div>
 
@@ -40,40 +41,47 @@ export default function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative mt-12 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10"
+          className="mx-auto mt-14 max-w-lg"
         >
-          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-1 text-xs font-semibold text-white">
-            MASA PROMOSI
-          </div>
-
-          <div className="text-center">
-            <div className="flex items-baseline justify-center gap-2">
-              <span className="text-lg text-slate-400 line-through">Rp 99.000</span>
-              <span className="text-sm text-slate-400">/kontrak</span>
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
+            {/* Badge */}
+            <div className="absolute right-6 top-6 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600">
+              Gratis
             </div>
-            <div className="mt-1 text-5xl font-extrabold text-slate-900">
-              Rp 0
+
+            {/* Price */}
+            <div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-sm text-slate-400 line-through">Rp 99.000</span>
+                <span className="text-xs text-slate-400">/kontrak</span>
+              </div>
+              <div className="mt-1 flex items-baseline gap-1">
+                <span className="text-5xl font-extrabold tracking-tight text-slate-900">Rp 0</span>
+                <span className="text-sm text-slate-400">/selamanya*</span>
+              </div>
+              <p className="mt-2 text-sm text-slate-400">*Selama masa promosi berlangsung</p>
             </div>
-            <p className="mt-2 text-sm text-slate-500">Gratis untuk semua fitur</p>
+
+            <div className="my-8 h-px bg-slate-100" />
+
+            {/* Benefits */}
+            <ul className="space-y-3.5">
+              {benefits.map((b) => (
+                <li key={b} className="flex items-start gap-3">
+                  <HugeiconsIcon icon={CheckmarkCircle02Icon} size={18} color="#2563eb" className="mt-0.5 shrink-0" />
+                  <span className="text-sm text-slate-600">{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Link
+              href="/register"
+              className="group mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-200/50 transition-all hover:bg-blue-700 hover:shadow-xl"
+            >
+              Mulai Buat Kontrak — Gratis
+              <HugeiconsIcon icon={ArrowRight01Icon} size={16} className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
-
-          <div className="my-8 h-px bg-slate-100" />
-
-          <ul className="space-y-3">
-            {benefits.map((b) => (
-              <li key={b} className="flex items-center gap-3">
-                <HugeiconsIcon icon={CheckmarkCircle02Icon} size={20} color="#4f46e5" />
-                <span className="text-sm text-slate-700">{b}</span>
-              </li>
-            ))}
-          </ul>
-
-          <Link
-            href="/register"
-            className="mt-8 flex w-full items-center justify-center rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-sm shadow-indigo-200 transition-all hover:bg-indigo-700 hover:shadow-md hover:shadow-indigo-200"
-          >
-            Mulai Buat Kontrak — Gratis
-          </Link>
         </motion.div>
       </div>
     </section>

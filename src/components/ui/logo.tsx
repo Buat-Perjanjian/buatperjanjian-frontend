@@ -47,7 +47,7 @@ export function Logo({ variant = 'full', size = 'md', className }: LogoProps) {
           size === 'lg' && 'text-lg',
         )}
       >
-        Buat<span className="text-indigo-600 dark:text-indigo-400">Perjanjian</span>
+        Buat<span className="text-orange-500 dark:text-orange-400">Perjanjian</span>
       </span>
     </div>
   );

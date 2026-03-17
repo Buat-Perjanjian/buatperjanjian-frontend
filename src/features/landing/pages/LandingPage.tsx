@@ -8,6 +8,7 @@ import HowItWorks from '../components/HowItWorks';
 import Pricing from '../components/Pricing';
 import CtaSection from '../components/CtaSection';
 import Footer from '../components/Footer';
+import Testimonials from '../components/Testimonials';
 
 const ThreeScene = dynamic(() => import('../components/ThreeScene'), {
   ssr: false,
@@ -15,15 +16,16 @@ const ThreeScene = dynamic(() => import('../components/ThreeScene'), {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <main>
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <ThreeScene />
           <ChatHero />
         </div>
         <Features />
         <HowItWorks />
+        <Testimonials />
         <Pricing />
         <CtaSection />
       </main>
